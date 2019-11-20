@@ -1,19 +1,20 @@
-annotation
-input | output | method
+annotation: 이미지에 대응하는 이미지 혹은 데이터
+input(guid) | output(guid or text value) | method
 
 image
-guid | image_hash | height | width | color | type
+guid | image_hash | height | width | color | category 
 
 dataset
-guid | name | split | major | minor
+name | split | major | minor | description
 
-image_mask_data
-dataset_guid | image(guid) | mask(guid) | mask_type
+image_mask_data: 데이터셋에 실제로 속한 이미지들
+dataset(name,split,major,minor) | image(guid) | mask(guid) | mask_type
 
 file
 guid | path | extension | size
 
-##### dataset specific informations #####
+##### data category specific informations #####
+# image metadatas separated by categories
 
 manga109
 guid | title | volume | chapter | no
@@ -23,3 +24,11 @@ guid | danbooru_id | no | ...
 
 ehen
 guid | ehen_id | no | ...
+
+contrib
+guid | contributor | title | chapter | no | ...
+
+##### etc #####
+
+contributor
+name | email | description | ...
