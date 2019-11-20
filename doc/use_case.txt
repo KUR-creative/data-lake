@@ -1,0 +1,43 @@
+datalake니까 임시로 lake라고 부른다.
+
+디비 생성
+
+커맨드라인 인터페이스 (git-like)
+
+lake new sqlite_db      szmc.db
+lake new <new-cmd-type> <db-name>
+db를 생성한다. 이름이 겹치면 생성하지 않음
+
+lake add flat       szmc.db     flat_img_dirpath
+lake add <add-type> <target-db> <flat-img-dirpath>
+db에 이미지 폴더를 추가한다.
+    일단 전부 file, image 테이블에 추가한다.
+    (기존 이미지들, 새로 추가하는 이미지들과) 해시가 비슷한 이미지에 대해 경고한다.
+
+lake add img_mask   szmc        img_dirpath    mask_dirpath    snet
+lake add <add-type> <target-db> <img-dir-path> <mask-dir-path> <method> <optional-matching-file>
+db에 이미지와 마스크 어노테이션을 함께 추가한다. 데이터셋을 만드는게 아님
+    만일 <optional-matching-file>이 없으면, 
+    이미지와 마스크 이름에서 암시적으로 어노테이션을 만듬.
+
+lake read duplicates
+lake read <read-type>
+이미지 해시가 겹치는 이미지들 보기, guid 리스트 출력
+
+lake update rm_duplicate
+lake update <update-type>
+이미지 해시가 겹치는 이미지 삭제
+
+lake new snet_dset szmc.db dset_name --annotation snet 
+                           snet 어노테이션이 있는 모든 이미지로  
+snet dataset 만들기: 
+    (name) -> 무작위 split으로 생성, dataset, img_mask_dataset 테이블 수정
+    이미지를 일일이 선택하는 방법은? - 기존 폴더와 이미지 선택 파일(?)로 만들기
+    이미지 난이도에 따라 적절히 분배하는 방법
+
+lake export img_mask szmc.db -o ./outpath
+export snet dataset:
+    선택한 디렉토리 경로 아래에 
+        이미지의 폴더와 yml을 생성
+
+모든 커맨드를 history에 저장한다.

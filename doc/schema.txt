@@ -1,0 +1,25 @@
+annotation
+input | output | method
+
+image
+guid | image_hash | height | width | color | type
+
+dataset
+guid | name | split | major | minor
+
+image_mask_data
+dataset_guid | image(guid) | mask(guid) | mask_type
+
+file
+guid | path | extension | size
+
+##### dataset specific informations #####
+
+manga109
+guid | title | volume | chapter | no
+
+danbooru
+guid | danbooru_id | no | ...
+
+ehen
+guid | ehen_id | no | ...
