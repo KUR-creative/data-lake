@@ -1,16 +1,24 @@
-annotation: 이미지에 대응하는 이미지 혹은 데이터
+annotation: 이미지에 대응하는 annotation 데이터 모음
 input(guid) | output(guid or text value) | method
+# input은 입력 데이터(보통 이미지).
+# output은 출력이 예상되는 데이터.
+# method는 어떻게 만든 데이터인지 밝힘.
 
-image
+image: 이미지 데이터 모음
 guid | image_hash | height | width | color | category 
+# image_hash는 Perception Hash를 써서 비슷한 이미지 중복을 억제함.
+# category는 이미지마다 존재하는 metadata를 저장하는 테이블을 가리킴.
 
-dataset
+dataset: 데이터셋 모음
 name | split | major | minor | description
+# {name, split, major, minor}가 데이터셋의 버전이면서 primary key.
+# 자세한 내용은 dataset_versioning 참고. 
 
-image_mask_data: 데이터셋에 실제로 속한 이미지들
+image_mask_data: snet 데이터셋, 데이터셋에 실제로 속한 이미지들을 모음
 dataset(name,split,major,minor) | image(guid) | mask(guid) | mask_type
+# mask_type은 rbk, wb, r_alpha 등 마스크의 특징을 설명
 
-file
+file: 파일 모음
 guid | path | extension | size
 
 ##### data category specific informations #####
@@ -30,5 +38,5 @@ guid | contributor | title | chapter | no | ...
 
 ##### etc #####
 
-contributor
-name | email | description | ...
+contributor: 기여자 목록
+name | email | public | description | ...
