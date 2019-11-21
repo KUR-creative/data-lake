@@ -1,10 +1,11 @@
 # data-lake
 
-FIXME: description
+Data associated with SZMC has become a big fxxking beast.
+I create this app to organize the data.
 
 ## Installation
 
-Download from http://example.com/FIXME.
+I dunno
 
 ## Usage
 
