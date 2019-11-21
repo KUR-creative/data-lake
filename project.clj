@@ -8,6 +8,6 @@
                  [org.xerial/sqlite-jdbc "3.28.0"]
                  [honeysql "0.9.5"]
                  ]
-  :main ^:skip-aot data-lake.core
+  :main ^:skip-aot data-lake.main
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

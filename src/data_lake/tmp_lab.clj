@@ -1,18 +1,15 @@
 ;map <F5> :wa<CR>:%Eval<CR>
 ;map <F6> :wa<CR>:!lein test<CR>
 ;map <F7> :wa<CR>:!lein run<CR>
-(ns data-lake.core
+(ns data-lake.tmp-lab
   (:require [clojure.java.jdbc :as jdbc]
             [honeysql.core :as sql]
             [honeysql.helpers :as h]
             )
   (:gen-class))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
 
+(comment ;-----------------------------------------------
 (defn db-do-noexcept
   "Do cmd on db"
   [db cmd]
@@ -46,3 +43,4 @@
    {:id 3 :path "1" :type "1" :extension "ext"}])
 
 (java.util.UUID/randomUUID)
+) ;------------------------------------------------------
