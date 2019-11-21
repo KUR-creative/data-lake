@@ -1,0 +1,6 @@
+data-lake
+    main
+    task
+        sqlite_db
+        flat_imgs
+        txt_ox_dset
