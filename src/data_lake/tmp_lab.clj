@@ -17,6 +17,20 @@
        (catch Exception e
               (println (.getMessage e)))));TODO: logging
 
+;(db-do-noexcept db cmd)
+#_(jdbc/insert! db :file {:id 20123 :path "p"
+                        :type "int" :extension "ext"})
+
+(jdbc/insert-multi! 
+  db 
+  :file
+  [{:id 1 :path "1" :type "1" :extension "ext"}
+   {:id 2 :path "1" :type "1" :extension "ext"}
+   {:id 3 :path "1" :type "1" :extension "ext"}])
+
+(java.util.UUID/randomUUID)
+) ;------------------------------------------------------
+
 (def db
   {:classname   "org.sqlite.JDBC"
    :subprotocol "sqlite"
@@ -31,16 +45,9 @@
      [:type      :TEXT]
      [:extension :TEXT]]))
 
-;(db-do-noexcept db cmd)
-#_(jdbc/insert! db :file {:id 20123 :path "p"
-                        :type "int" :extension "ext"})
-
-(jdbc/insert-multi! 
-  db 
-  :file
-  [{:id 1 :path "1" :type "1" :extension "ext"}
-   {:id 2 :path "1" :type "1" :extension "ext"}
-   {:id 3 :path "1" :type "1" :extension "ext"}])
-
-(java.util.UUID/randomUUID)
-) ;------------------------------------------------------
+(jdbc/query db ["SELECT * FROM file"])
+(jdbc/query db 
+"SELECT name, sql FROM sqlite_master
+WHERE type='table'
+ORDER BY name;"
+)

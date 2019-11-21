@@ -1,7 +1,7 @@
 data-lake
     main
     task
-        sqlite_db
+        sqlite
         flat_imgs
         txt_ox_dset
 

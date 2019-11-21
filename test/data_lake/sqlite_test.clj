@@ -1,6 +1,6 @@
-(ns data-lake.core-test
+(ns data-lake.sqlite-test
   (:require [clojure.test :refer :all]
-            [data-lake.core :refer :all]))
+            [data-lake.task.sqlite :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."
