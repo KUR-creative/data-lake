@@ -1,4 +1,5 @@
 # data-lake
+![Build Status](https://github.com/kur-creative/data-lake/workflows/CI/badge.svg) 
 
 Data associated with SZMC has become a big fxxking beast.
 I create this app to organize the data.
