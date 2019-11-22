@@ -16,7 +16,7 @@
   "Create db. If specified db is already exists, 
    it never create."
   [path ddl]
-  (db-do-noexcept {:classname   "org.sqlite.JDBC"
-                   :subprotocol "sqlite"
-                   :subname     path}
-                  ddl))
+  (let [db-spec {:classname   "org.sqlite.JDBC"
+                 :subprotocol "sqlite"
+                 :subname     path}]
+    (when (db-do-noexcept db-spec ddl) db-spec)))

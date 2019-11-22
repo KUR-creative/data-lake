@@ -9,9 +9,22 @@
     (let [path "./test/fixture/test.db" 
           file (io/as-file path)
           _    (create! path
-                        (jdbc/create-table-ddl 
+                        (jdbc/create-table-ddl
                           :file
                           [[:test :INTEGER]]))]
       (do (is (.exists file))
           (.delete file)
-          ))))
+          )))
+  (testing "if successfully creation then return db-spec"
+    (let [path "./test/fixture/test2.db"]
+      (is (= {:classname   "org.sqlite.JDBC"
+              :subprotocol "sqlite"
+              :subname     path}
+             (create! path
+                      (jdbc/create-table-ddl
+                        :file
+                        [[:test :INTEGER]]))))
+      (.delete (io/as-file path))))
+  (testing "if can't create db then return nil"
+    (is (nil? (create! nil nil))))
+  )
