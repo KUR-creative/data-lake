@@ -1,6 +1,43 @@
 data-lake
     main
     task
-        sqlite_db
+        sqlite
         flat_imgs
         txt_ox_dset
+
+#---------------------------
+
+./CHANGELOG.md
+./doc
+    /architecture.txt
+    /dataset_versioning.txt
+    /intro.md
+    /schema.txt
+    /use_case.txt
+./LICENSE
+./project.clj
+./README.md
+./resources
+
+./DATA
+./DB
+    szmc.db
+
+./src
+    /data_lake
+        /main.clj
+        /task
+            /sqlite.clj
+        /tmp_lab.clj
+./test
+    /data_lake
+        /sqlite_test.clj
+
+./target
+    /default
+        /classes
+        /repl-port
+        /stale
+    /default+test+test
+        /classes
+        /stale

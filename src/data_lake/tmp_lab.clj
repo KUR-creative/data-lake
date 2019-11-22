@@ -9,27 +9,13 @@
   (:gen-class))
 
 
-(comment ;-----------------------------------------------
 (defn db-do-noexcept
   "Do cmd on db"
   [db cmd]
   (try (jdbc/db-do-commands db cmd) 
        (catch Exception e
               (println (.getMessage e)))));TODO: logging
-
-(def db
-  {:classname   "org.sqlite.JDBC"
-   :subprotocol "sqlite"
-   :subname     "database.db"
-   })
-
-(def cmd
-  (jdbc/create-table-ddl 
-    :file
-    [[:hash      :INTEGER :PRIMARY :KEY :NOT :NULL]
-     [:path      :TEXT]
-     [:type      :TEXT]
-     [:extension :TEXT]]))
+(comment ;-----------------------------------------------
 
 ;(db-do-noexcept db cmd)
 #_(jdbc/insert! db :file {:id 20123 :path "p"
@@ -44,3 +30,26 @@
 
 (java.util.UUID/randomUUID)
 ) ;------------------------------------------------------
+
+(def db
+  {:classname   "org.sqlite.JDBC"
+   :subprotocol "sqlite"
+   :subname     "./DB/database.db"
+   })
+
+(def cmd
+  (jdbc/create-table-ddl 
+    :file
+    [[:hash      :INTEGER :PRIMARY :KEY :NOT :NULL]
+     [:path      :TEXT]
+     [:type      :TEXT]
+     [:extension :TEXT]]))
+
+#_(jdbc/query db ["SELECT * FROM file"])
+#_(jdbc/query db 
+"SELECT name, sql FROM sqlite_master
+WHERE type='table'
+ORDER BY name;"
+)
+
+(db-do-noexcept db cmd)

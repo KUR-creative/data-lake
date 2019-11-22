@@ -50,7 +50,7 @@ lake <task-name> <subtask> [subtask options] ...
 
 1. Generate data for manga classification (text o/x)
 
-lake sqlite_db   new szmc.db  # DB를 생성한다. (최초로 한번만)
+lake sqlite   new szmc.db  # DB를 생성한다. (최초로 한번만)
 
 lake flat_imgs   add szmc.db manga109/* # 이미지를 szmc.db에 저장한다
 lake txt_ox_dset new near299x299 # 이미지를 crop하고 텍스트 존재성을 UI에서 입력받는다. 웹서버를 실행할 수도 있다.
