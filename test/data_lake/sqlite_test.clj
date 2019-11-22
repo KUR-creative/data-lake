@@ -26,5 +26,11 @@
                         [[:test :INTEGER]]))))
       (.delete (io/as-file path))))
   (testing "if can't create db then return nil"
-    (is (nil? (create! nil nil))))
+    (is (nil? (create! nil nil)))))
+
+(deftest szmc-sqlite-v0.1.0-schema-test
+  (testing "create szmc v0.1.0 sqlite db from edn"
+    (let [path "./test/fixture/test3.db" 
+          file (io/as-file path)
+    )
   )
