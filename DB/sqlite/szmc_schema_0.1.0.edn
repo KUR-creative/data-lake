@@ -1,0 +1,61 @@
+;; dependency graph
+
+;; file        <- image
+;; image_color <- image
+
+;; image     <- image_mask_data
+;; mask_type <- image_mask_data
+;; dataset   <- image_mask_data
+
+;; annotation_method <- annotation
+;; image <- annotation (not requirements, but common)
+
+{:order
+ [:file 
+  :annotation_method :annotation
+  :image_color :image
+  :dataset :mask_type :image_mask_data]
+
+ :schema
+ {:file
+  [[:guid      :BLOB    "NOT NULL" "PRIMARY KEY"]
+   [:path      :TEXT    "NOT NULL"]
+   [:extension :TEXT    "NOT NULL"]
+   [:size      :INTEGER "NOT NULL"]]
+
+  :annotation_method
+  [[:name :TEXT "NOT NULL" "PRIMARY KEY"]] ;segmentation, classification, ...
+  :annotation
+  [[:input  :BLOB "NOT NULL"] ;guid
+   [:output :BLOB "NOT NULL"] ;guid
+   [:method :TEXT "NOT NULL" :REFERENCES "annotation_method(name)"]]
+
+  :image_color
+  [[:name :TEXT "NOT NULL" "PRIMARY KEY"]] ;grayscale, rgb, rgba, ...
+  :image
+  [[:guid     :BLOB    "NOT NULL" "PRIMARY KEY" :REFERENCES "file(guid)"]
+   [:hash     :BLOB    "NOT NULL"]
+   [:height   :INTEGER "NOT NULL"]
+   [:width    :INTEGER "NOT NULL"]
+   [:color    :TEXT    "NOT NULL" :REFERENCES "image_color(name)"]
+   [:category :TEXT]; name of *table* for specific dataset metadata
+   ]
+
+  :dataset
+  [[:name        :TEXT    "NOT NULL"] 
+   [:split       :TEXT    "NOT NULL"]
+   [:major       :INTEGER "NOT NULL"]
+   [:minor       :TEXT    "NOT NULL"]
+   [:description :TEXT]
+   ["PRIMARY KEY" "(name, split, major, minor)"]]
+
+  :mask_type
+  [[:name :TEXT "NOT NULL" "PRIMARY KEY"]]
+  :image_mask_data
+  [[:name  :TEXT    "NOT NULL" :REFERENCES "dataset(name)"]
+   [:split :TEXT    "NOT NULL" :REFERENCES "dataset(split)"]
+   [:major :INTEGER "NOT NULL" :REFERENCES "dataset(major)"]
+   [:minor :TEXT    "NOT NULL" :REFERENCES "dataset(minor)"]
+   [:image :BLOB    "NOT NULL" :REFERENCES "image(guid)"]
+   [:mask  :BLOB    "NOT NULL" :REFERENCES "image(guid)"]
+   [:mtype :TEXT    "NOT NULL" :REFERENCES "mask_type(name)"]]}}

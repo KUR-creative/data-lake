@@ -2,27 +2,25 @@
   (:require [clojure.test :refer :all]
             [clojure.edn :as edn]
             [clojure.spec.alpha :as s]
+            [orchestra.spec.test :as st]
             ))
 
-(s/def ::order list?)
+(s/def ::order vector?)
 (s/def ::schema map?)
 (s/def ::schema-map (s/keys :req-un [::order ::schema]))
-(s/explain ::schema-map {:order 1 :schema 2})
 
-(s/def ::a #(= % 1))
-(s/def ::b #{2})
-(s/explain ::a 1)
-(s/explain ::b 2)
-
-(s/def ::dat (s/keys :req-un [::a ::b]))
-(s/explain ::dat {:a 1 :b 2})
-(s/explain ::dat {:a 1})
+(s/fdef ddl-seq
+  :args (s/cat :edn string?)
+  :ret vector?)
+  ;:ret ::schema-map)
 
 (defn ddl-seq
   "Read jdbc/create-table-ddl style schema from edn file.
    Return sequence of create-table-ddl"
-  [edn])
+  [edn]
+  (edn/read-string edn)
+  [1 2 3])
 
-(def m (edn/read-string (slurp "./DB/sqlite/szmc_schema_0.1.0.edn")))
-(s/valid? ::schema-map m)
-(s/explain ::schema-map m)
+(st/instrument) ;; TODO - NOTE
+(ddl-seq (slurp "./DB/sqlite/szmc_schema_0.1.0.edn"))
+;(ddl-seq 1)

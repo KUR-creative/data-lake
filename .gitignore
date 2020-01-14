@@ -12,5 +12,4 @@ pom.xml.asc
 .hg/
 
 DATA
-DB
 *.db
