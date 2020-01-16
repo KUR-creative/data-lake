@@ -10,6 +10,7 @@
             )
   (:gen-class))
 
+(comment ;-----------------------------------------------
 (def schema-map
   {:file
    [[:guid      :BLOB    "NOT NULL" "PRIMARY KEY"]
@@ -46,7 +47,6 @@
 (println (jdbc/query db (-> (h/select :*)
                             (h/from :file)
                              sql/format)))
-(byte (java.util.UUID/randomUUID))
 
 (defn db-do-noexcept
   "Do cmd on db"
@@ -54,7 +54,6 @@
   (try (jdbc/db-do-commands db cmd) 
        (catch Exception e
               (println (.getMessage e)))));TODO: logging
-(comment ;-----------------------------------------------
 
 ;(db-do-noexcept db cmd)
 #_(jdbc/insert! db :file {:id 20123 :path "p"
