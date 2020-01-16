@@ -20,8 +20,9 @@
   "Create sqlite db in `path` using schema 
   described in `schema`"
   [path schema]
-  (jdbc/db-do-commands
-    {:classname   "org.sqlite.JDBC"
-     :subprotocol "sqlite"
-     :subname     path}
-    (mapv #(apply jdbc/create-table-ddl %) schema)))
+  (let [db {:classname   "org.sqlite.JDBC"
+            :subprotocol "sqlite"
+            :subname     path}]
+    (jdbc/db-do-commands
+      db (mapv #(apply jdbc/create-table-ddl %) schema))
+    db))
