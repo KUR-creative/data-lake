@@ -8,6 +8,7 @@
                  [org.clojure/java.jdbc "0.7.9"]
                  [org.xerial/sqlite-jdbc "3.28.0"]
                  [org.clojure/tools.trace "0.7.10"]
+                 [org.clojure/tools.cli "0.4.2"]
                  [honeysql "0.9.5"]
                  [orchestra "2018.12.06-2"]
                  ]
