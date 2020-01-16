@@ -50,7 +50,6 @@
                  db))
           (.delete file)))))
 
-;#uuid "6261bc97-e39c-4c2c-9ca2-36c858ce5ced"
 (deftest create!-io-test
   (testing "insert and get"
     (let [path "./test/fixture/test4.db" 
@@ -70,11 +69,6 @@
                  (into #{} (map #(java.util.UUID/fromString (:guid %)) out))
                  #_(into #() (map :guid out))))
           (.delete file)))))
-
-
-;actual: (not (= 
-;#{#uuid "c59c9852-9b73-40b8-aac6-b9d46101e3af" #uuid "6cbe2a6f-43e4-4a67-868d-b6740d215104" #uuid "6261bc97-e39c-4c2c-9ca2-36c858ce5ced"} 
-;#{{:guid "6261bc97-e39c-4c2c-9ca2-36c858ce5ced"} {:guid "6cbe2a6f-43e4-4a67-868d-b6740d215104"} {:guid "c59c9852-9b73-40b8-aac6-b9d46101e3af"}}))
 
 (def edn-path "./DB/sqlite/szmc_schema_0.1.0.edn")
 (deftest szmc-sqlite-v0.1.0-schema-test

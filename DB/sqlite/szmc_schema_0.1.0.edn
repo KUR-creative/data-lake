@@ -10,6 +10,10 @@
 ;; annotation_method <- annotation
 ;; image <- annotation (not requirements, but common)
 
+;; TODO: BLOB(java.util.UUID)를 저장해도 가져올 땐 TEXT가 저장된다.
+;; java.util.UUID/fromString을 쓸 것.
+;; 또한 sqlite는 다이내믹 타입드 데이터베이스임을 기억할 것.
+
 {:order
  [:file 
   :annotation_method :annotation
