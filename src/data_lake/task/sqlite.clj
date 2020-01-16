@@ -2,21 +2,27 @@
   (:require [clojure.java.jdbc :as jdbc]
             [honeysql.core :as sql]
             [honeysql.helpers :as h]
+            [clojure.spec.alpha :as s]
+            [orchestra.spec.test :as st]
+            ;[clojure.tools.trace :as dbg]
             )
   (:gen-class))
 
-(defn db-do-noexcept
-  "Do cmd on db"
-  [db cmd]
-  (try (jdbc/db-do-commands db cmd) 
-       (catch Exception e
-              (println (.getMessage e)))));TODO: logging
+(s/def ::table-name (s/or :kw keyword? :s string?))
+(s/def ::table-spec (s/* vector?))
+(s/def ::table-schema (s/tuple ::table-name 
+                               ::table-spec))
+(s/fdef create!
+  :args (s/cat :path string? 
+               :schema (s/coll-of ::table-schema)))
 
 (defn create!
-  "Create db. If specified db is already exists, 
-   it never create."
-  [path ddl]
-  (db-do-noexcept {:classname   "org.sqlite.JDBC"
-                   :subprotocol "sqlite"
-                   :subname     path}
-                  ddl))
+  "Create sqlite db in `path` using schema 
+  described in `schema`"
+  [path schema]
+  (let [db {:classname   "org.sqlite.JDBC"
+            :subprotocol "sqlite"
+            :subname     path}]
+    (jdbc/db-do-commands
+      db (mapv #(apply jdbc/create-table-ddl %) schema))
+    db))

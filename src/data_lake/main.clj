@@ -1,5 +1,5 @@
 (ns data-lake.main
-  ;(:require  )
+  (:require [util.db-util :as dbu])
   (:gen-class))
 
 (defn -main
