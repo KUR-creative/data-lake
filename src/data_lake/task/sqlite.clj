@@ -26,3 +26,5 @@
     (jdbc/db-do-commands
       db (mapv #(apply jdbc/create-table-ddl %) schema))
     db))
+
+#_(defn run-cmd "Run command")
