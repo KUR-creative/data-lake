@@ -1,8 +1,12 @@
 (ns data-lake.main-test
   (:require [clojure.test :refer :all]
+            [clojure.java.jdbc :as jdbc]
             [clojure.java.io :as io]
+            [honeysql.core :as sql]
+            [honeysql.helpers :as h]
             [data-lake.main :refer :all]
             [data-lake.cli :refer :all]
+            [data-lake.task.sqlite :as sqlite]
             ))
 
 (deftest -main-arg-test
@@ -33,5 +37,19 @@
               ; If there is history then check no logging.
           (.delete db-file)
           )))
-    (println "Run `$lake init` first FOR TESTING SQLITE")
-  ))
+    (do
+      (println "Run `$lake init` first FOR TESTING SQLITE")
+      (println)
+      (println "Test for init. It will be reverted (history will be deleted after test):")
+      (testing "init create history db and insert init cmd"
+        (let [history (io/as-file history-db-path)
+              db      (sqlite/db-spec history-db-path)
+              _       (-main "init")
+              query   (-> (h/select :cmd) 
+                          (h/from :history)
+                          sql/format)]
+          (is (.exists history))
+          (is (= "init" 
+                 (-> (jdbc/query db query) first :cmd)))
+          (.delete history))
+  ))))
