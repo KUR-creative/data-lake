@@ -3,10 +3,10 @@
             [clojure.java.jdbc :as jdbc]
             [java-time :refer [offset-date-time]]
             [data-lake.task.sqlite :as sqlite]
+            [data-lake.task.init :as init]
+            [data-lake.consts :refer :all]
             ))
 
-(def history-db-path "./DB/cmd_history.db")
-(def history-schema-path "./DB/sqlite/cmd_history_0.1.0.edn")
 (defn initiated? [] 
   (.exists (io/as-file history-db-path)))
 (defn log [args]
@@ -18,6 +18,13 @@
 
 (def help-msg "help-msg\n")
 (def no-need-init-msg "Already initiated")
+
+(defmulti run-task 
+  (fn [& args] (when args (first args))))
+(defmethod run-task "help" [task & args] 
+  (print help-msg))
+(defmethod run-task nil [& args] 
+  (print help-msg))
 
 (defn run
   "Run command according to args"

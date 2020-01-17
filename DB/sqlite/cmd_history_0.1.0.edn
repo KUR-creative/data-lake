@@ -1,4 +1,5 @@
 ;; schma for cli command history
+;; TODO: Add :git_hash column
 
 {:order  [:history]
  :schema {:history [[:cmd  :TEXT "NOT NULL"]
