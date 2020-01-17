@@ -3,6 +3,8 @@
             [data-lake.main :refer :all]))
 
 (deftest -main-arg-test
-  (testing "empty args"
-    (is (= (with-out-str (apply -main []))
-           help-msg))))
+  (testing "args"
+    (is (= (with-out-str (apply -main [])) help-msg))
+    (is (= (with-out-str (apply -main ["help"])) 
+           help-msg))
+  ))
