@@ -2,7 +2,9 @@
   (:require [clojure.java.jdbc :as jdbc]
             [honeysql.core :as sql]
             [honeysql.helpers :as h]
+            [clojure.edn :as edn]
             [clojure.spec.alpha :as s]
+            [clojure.tools.trace :as dbg]
             [orchestra.spec.test :as st]
             ;[clojure.tools.trace :as dbg]
             )
@@ -27,4 +29,18 @@
       db (mapv #(apply jdbc/create-table-ddl %) schema))
     db))
 
-#_(defn run-cmd "Run command")
+(defn run-cmd 
+  "Run command"
+  [& args]
+  (vec args)
+  (cond 
+    (= (first args) "new") 
+    (let [[_ db-path edn-path] args
+          schema (-> edn-path
+                     slurp edn/read-string :schema)]
+      ;(create! db-path schema))
+      (create! db-path (dbg/trace schema)))
+
+    :else
+    (println "wtf" args (first args))
+    ))

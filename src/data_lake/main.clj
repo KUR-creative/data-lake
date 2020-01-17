@@ -12,12 +12,16 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (let [n-args (count args)]
-    (cond 
-      (= n-args 0)            (print help-msg)
-      (= (first args) "help") (print help-msg)
-  )))
+  (if (= (count args) 0)
+      (print help-msg)
+      (let [task (first args)]
+        (cond 
+          (= task "help") 
+          (print help-msg)
+
+          (= task "sqlite") 
+          (apply sqlite/run-cmd (rest args))
+      ))))
   ;(println args "Hello, World!")
   ;(clojure.pprint/pprint (cli/parse-opts args cli-options))
   ;(let [cmd-map (cli/parse-opts args cli-options)]
-
