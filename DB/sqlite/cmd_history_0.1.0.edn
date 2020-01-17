@@ -1,0 +1,6 @@
+;; schma for cli command history
+
+{:order  [:history]
+ :schema {:history [[:cmd  :TEXT "NOT NULL"]
+                    [:time :TEXT "NOT NULL"] 
+                    ["PRIMARY KEY" "(cmd, time)"]]}}
