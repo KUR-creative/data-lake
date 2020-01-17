@@ -1,6 +1,3 @@
-;map <F5> :wa<CR>:%Eval<CR>
-;map <F6> :wa<CR>:!lein test<CR>
-;map <F7> :wa<CR>:!lein run<CR>
 (ns data-lake.tmp-lab
   (:require [clojure.java.jdbc :as jdbc]
             [honeysql.core :as sql]
