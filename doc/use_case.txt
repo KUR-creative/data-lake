@@ -58,4 +58,8 @@ lake txt_ox_dset add --no-txt-imgs <no-txt-img-dirpath>
 lake txt_ox_dset add --has-txt-imgs <has-txt-img-dirpath> 
 lake txt_ox_dset out -o <out-dirpath>
 
-* 모든 커맨드는 기록된다.
+* 모든 (성공한) 커맨드는 (디비에) 기록된다.
+
+모든 작업을 하기 전에 최초로 init을 해야 된다. 
+init을 하지 않으면 작업은 불가능하다.
+init은 cmd history를 초기화 한다.(없던 걸 만든다)

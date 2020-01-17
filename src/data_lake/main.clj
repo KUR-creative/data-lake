@@ -1,16 +1,26 @@
 (ns data-lake.main
   (:require [util.db-util :as dbu]
-            [clojure.tools.cli :as cli]
+            [clojure.java.jdbc :as jdbc]
+            [clojure.java.io :as io]
             [data-lake.task.sqlite :as sqlite]
+            [java-time :refer [offset-date-time]]
             )
   (:gen-class))
 
-(def cli-options
-  [["-h" "--help"]])
+(def history-db-path "./DB/cmd_history.db")
+(def history-schema-path "./DB/sqlite/cmd_history_0.1.0.edn")
+(defn initiated? [] 
+  (.exists (io/as-file history-db-path)))
+(defn log [args]
+  (if (.exists (io/as-file history-db-path))
+      (jdbc/insert! (sqlite/db-spec history-db-path)
+                    :history 
+                    {:cmd  (clojure.string/join " " args)
+                     :time (offset-date-time)})))
 
 (def help-msg "help-msg\n")
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Entry point"
   [& args]
   (if (= (count args) 0)
       (print help-msg)
@@ -19,9 +29,17 @@
           (= task "help") 
           (print help-msg)
 
+          (= task "init") 
+          (if (initiated?)
+              (println "Already initiated") 
+              (sqlite/create! 
+                history-db-path 
+                (sqlite/schema-map history-schema-path)))
+
           (= task "sqlite") 
-          (apply sqlite/run-cmd (rest args))
+          (if (initiated?)
+              (do (when-not (contains? args :no-log) 
+                    (log args))
+                  (apply sqlite/run-cmd (rest args)))
+              (println "Please run `$lake init` first"))
       ))))
-  ;(println args "Hello, World!")
-  ;(clojure.pprint/pprint (cli/parse-opts args cli-options))
-  ;(let [cmd-map (cli/parse-opts args cli-options)]
