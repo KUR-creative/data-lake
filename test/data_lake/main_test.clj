@@ -1,7 +1,9 @@
 (ns data-lake.main-test
   (:require [clojure.test :refer :all]
             [clojure.java.io :as io]
-            [data-lake.main :refer :all]))
+            [data-lake.main :refer :all]
+            [data-lake.cli :refer :all]
+            ))
 
 (deftest -main-arg-test
   (testing "args"
