@@ -1,6 +1,6 @@
 ;map <F5> :wa<CR>:%Eval<CR>
 ;map <F6> :wa<CR>:!lein test<CR>
-;map <F8> :wa<CR>:!lein run 
+;map lr :wa<CR>:!lein run 
 (ns data-lake.main
   (:require [util.db-util :as dbu]
             [clojure.java.jdbc :as jdbc]
