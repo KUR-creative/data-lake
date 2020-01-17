@@ -22,6 +22,7 @@
                      :time (offset-date-time)})))
 
 (def help-msg "help-msg\n")
+(def no-need-init-msg "Already initiated")
 (defn -main
   "Entry point"
   [& args]
@@ -34,14 +35,17 @@
 
           (= task "init") 
           (if (initiated?)
-              (println "Already initiated") 
-              (sqlite/create! 
-                history-db-path 
-                (sqlite/schema-map history-schema-path)))
+              (print no-need-init-msg) 
+              (do
+                (sqlite/create! 
+                  history-db-path 
+                  (sqlite/schema-map history-schema-path))
+                (log args)
+                (println "System initiated. History db created.")))
 
           (= task "sqlite") 
           (if (initiated?)
-              (do (when-not (contains? args :no-log) 
+              (do (when-not (contains? (set args) :no-log) 
                     (log args))
                   (apply sqlite/run-cmd (rest args)))
               (println "Please run `$lake init` first"))

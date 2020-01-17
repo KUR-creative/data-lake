@@ -9,6 +9,9 @@
     (is (= (with-out-str (-main "help")) help-msg)))
   (if (initiated?)
     (do
+      (testing "already initiated"
+        (is (= (with-out-str (-main "init"))
+               no-need-init-msg)))
       (testing "sqlite create!"
         (let [db-path  "./test/fixture/test6.db"
               file     (io/as-file db-path)
@@ -28,5 +31,5 @@
               ; If there is history then check no logging.
           (.delete db-file)
           )))
-    (println "Run `$lake init` first FOR TESTING SQLITE"))
-  )
+    (println "Run `$lake init` first FOR TESTING SQLITE")
+  ))
