@@ -6,18 +6,15 @@
             ))
 
 
-(defn run-cmd ;; TODO: refactor
-  "Run command" 
-  [& args]
-  (cond 
-    (= (first args) "new") 
-    (let [[_ db-path edn-path] args
-          schema (-> edn-path
-                     slurp edn/read-string :schema)]
-      ;(create! db-path schema))
-      (create! db-path (dbg/trace schema)))
+(defmulti run-cmd (fn [& args] (when args (first args))))
 
-    :else false)) ;; Failure case
+(defmethod run-cmd "new" [& args]
+  (let [[_ db-path edn-path] args
+        schema (-> edn-path slurp edn/read-string :schema)]
+    (create! db-path (dbg/trace schema))))
+
+(defmethod run-cmd :default [& args] false)
+
 
 (defmethod tc/run-task "sqlite" [task & args] 
   (if (tc/initiated?)
