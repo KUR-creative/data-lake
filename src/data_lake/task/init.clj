@@ -1,19 +1,18 @@
 (ns data-lake.task.init
   (:require [clojure.java.io :as io]
-            [data-lake.task.sqlite :as sqlite]
-            [data-lake.consts :refer :all]
-            ;[data-lake.task.common :refer [run-task]]
+            [data-lake.core.sqlite :as sqlite]
+            [data-lake.consts :as c]
+            [data-lake.task.common :as tc]
             ))
 
-#_(def no-need-init-msg "Already initiated")
+(def no-need-init-msg "Already initiated")
 
-#_(defmethod run-task "init" [task & args] 
-  (= task "init") 
-  (if (initiated?)
+(defmethod tc/run-task "init" [& args] 
+  (if (tc/initiated?)
     (print no-need-init-msg) 
     (do 
       (sqlite/create! 
-        history-db-path 
-        (sqlite/schema-map history-schema-path))
-      (log args)
+        c/history-db-path 
+        (sqlite/schema-map c/history-schema-path))
+      (tc/log args)
       (println "System is initiated. History DB is created."))))

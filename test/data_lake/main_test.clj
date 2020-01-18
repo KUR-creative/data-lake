@@ -8,15 +8,16 @@
             [data-lake.cli :refer :all]
             [data-lake.core.sqlite :as sqlite]
             [data-lake.consts :refer [history-db-path]]
+            [data-lake.task.common :as tc]
             ))
 
 (deftest -main-arg-test
   (testing "args"
     (is (= (with-out-str (-main)) help-msg))
     (is (= (with-out-str (-main "help")) help-msg)))
-  (let [pre-init (initiated?)
+  (let [pre-init (tc/initiated?)
         history  (io/as-file history-db-path)]
-    (when-not (initiated?)
+    (when-not (tc/initiated?)
       (println "Run `$lake init` first FOR TESTING SQLITE")
       (println)
       (println "Test for init. It will be reverted (history will be deleted after test):")
