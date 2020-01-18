@@ -2,14 +2,11 @@
   (:require [clojure.java.io :as io]
             [clojure.java.jdbc :as jdbc]
             [java-time :refer [offset-date-time]]
-            [data-lake.core.sqlite :as sqlite]
             [data-lake.consts :as c]
-
+            [data-lake.core.sqlite :as sqlite]
             [data-lake.task.common :as tc]
             [data-lake.task.init]
-            [data-lake.task.sqlite]
-            ;[data-lake.task.sqlite :refer [run-cmd]]
-            ))
+            [data-lake.task.sqlite]))
 
 
 (def help-msg "help-msg\n")

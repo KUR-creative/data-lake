@@ -1,7 +1,7 @@
 (ns data-lake.task.init
   (:require [clojure.java.io :as io]
-            [data-lake.core.sqlite :as sqlite]
             [data-lake.consts :as c]
+            [data-lake.core.sqlite :as sqlite]
             [data-lake.task.common :as tc]
             ))
 

@@ -1,9 +1,9 @@
 (ns data-lake.core.sqlite-test
-  (:require [clojure.test :refer :all]
-            [clojure.java.jdbc :as jdbc]
-            [clojure.java.io :as io]
-            [orchestra.spec.test :as st]
+  (:require [clojure.java.io :as io]
             [clojure.edn :as edn]
+            [clojure.test :refer :all]
+            [clojure.java.jdbc :as jdbc]
+            [orchestra.spec.test :as st]
             [honeysql.core :as sql]
             [honeysql.helpers :as h]
             [data-lake.core.sqlite :refer :all]))

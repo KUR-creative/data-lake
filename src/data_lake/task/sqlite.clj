@@ -1,8 +1,8 @@
 (ns data-lake.task.sqlite
   (:require [clojure.edn :as edn]
-            [clojure.tools.trace :as dbg]
             [data-lake.core.sqlite :refer [create!]]
             [data-lake.task.common :as tc]
+            ;[clojure.tools.trace :as dbg]
             ))
 
 
@@ -11,7 +11,8 @@
 (defmethod run-cmd "new" [& args]
   (let [[_ db-path edn-path] args
         schema (-> edn-path slurp edn/read-string :schema)]
-    (create! db-path (dbg/trace schema))))
+    ;(create! db-path (dbg/trace schema)
+    (create! db-path schema)))
 
 (defmethod run-cmd :default [& args] false)
 
