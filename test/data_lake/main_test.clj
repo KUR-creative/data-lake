@@ -6,7 +6,7 @@
             [honeysql.helpers :as h]
             [data-lake.main :refer :all]
             [data-lake.cli :refer :all]
-            [data-lake.task.sqlite :as sqlite]
+            [data-lake.core.sqlite :as sqlite]
             [data-lake.consts :refer [history-db-path]]
             ))
 

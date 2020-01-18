@@ -2,13 +2,16 @@
   (:require [clojure.java.io :as io]
             [clojure.java.jdbc :as jdbc]
             [java-time :refer [offset-date-time]]
-            [data-lake.task.sqlite :as sqlite]
-            [data-lake.task.init :as init]
+            [data-lake.core.sqlite :as sqlite]
+            [data-lake.task.sqlite :refer [run-cmd]]
+            ;[data-lake.task.init :as init]
             [data-lake.consts :refer :all]
+            ;[data-lake.task.common :refer [run-task log]]
             ))
 
 (defn initiated? [] 
   (.exists (io/as-file history-db-path)))
+
 (defn log [args]
   (if (.exists (io/as-file history-db-path))
       (jdbc/insert! (sqlite/db-spec history-db-path)
@@ -19,11 +22,9 @@
 (def help-msg "help-msg\n")
 (def no-need-init-msg "Already initiated")
 
-(defmulti run-task 
-  (fn [& args] (when args (first args))))
-(defmethod run-task "help" [task & args] 
+#_(defmethod run-task "help" [task & args] 
   (print help-msg))
-(defmethod run-task nil [& args] 
+#_(defmethod run-task nil [& args] 
   (print help-msg))
 
 (defn run
@@ -50,6 +51,6 @@
           (if (initiated?)
               (do (when-not (contains? (set args) :no-log) 
                     (log args))
-                  (apply sqlite/run-cmd (rest args)))
+                  (apply run-cmd (rest args)))
               (println "Please run `$lake init` first"))
       ))))

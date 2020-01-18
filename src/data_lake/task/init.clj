@@ -2,11 +2,12 @@
   (:require [clojure.java.io :as io]
             [data-lake.task.sqlite :as sqlite]
             [data-lake.consts :refer :all]
+            ;[data-lake.task.common :refer [run-task]]
             ))
 
-(def no-need-init-msg "Already initiated")
+#_(def no-need-init-msg "Already initiated")
 
-(defmethod run-task "init" [task & args] 
+#_(defmethod run-task "init" [task & args] 
   (= task "init") 
   (if (initiated?)
     (print no-need-init-msg) 

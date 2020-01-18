@@ -1,43 +1,41 @@
-data-lake
-    main
-    task
-        sqlite
-        flat_imgs
-        txt_ox_dset
+ [BEFORE]
+src
+├── data_lake
+│   ├── cli.clj    .............. call tasks
+│   ├── consts.clj .............. global constants
+│   ├── main.clj   .............. EntryPoint
+│   ├── pysrc
+│   │   └── gen_tfrecord.py
+│   ├── task .................... CLI tasks `lein run <task-name> [args]`
+│   │   ├── common.clj .......... defmulti, log, common things of tasks
+│   │   ├── init.clj ............ System Initiation(history DB creation)
+│   │   └── sqlite.clj .......... CLI task interface + sqlite DB job entangled - need to separate!
+│   └── tmp_lab.clj ............. useless
+└── util
+    └── db_util.clj ............. useless
 
-#---------------------------
+ [AFTER]
+src
+├── data_lake
+│   ├── cli.clj    .............. call tasks
+│   ├── consts.clj .............. global constants
+│   ├── main.clj   .............. EntryPoint
+│   ├── pysrc
+│   │   └── gen_tfrecord.py
+│   ├── task .................... CLI tasks `lein run <task-name> [args]`
+│   │   ├── common.clj .......... defmulti, log, common things of tasks
+│   │   ├── init.clj ............ System Initiation(history DB creation)
+│   │   └── sqlite.clj .......... sqlite CLI task 
+│   ├── core
+│   │   └── sqlite.clj .......... sqlite DB job
+│   └── tmp_lab.clj xxxxxxxxxxxxx Remove
+└── util xxxxxxxxxxxxxxxxxxxxxxxx Remove
+    └── db_util.clj xxxxxxxxxxxxx Remove
 
-./CHANGELOG.md
-./doc
-    /architecture.txt
-    /dataset_versioning.txt
-    /intro.md
-    /schema.txt
-    /use_case.txt
-./LICENSE
-./project.clj
-./README.md
-./resources
-
-./DATA
-./DB
-    szmc.db
-
-./src
-    /data_lake
-        /main.clj
-        /task
-            /sqlite.clj
-        /tmp_lab.clj
-./test
-    /data_lake
-        /sqlite_test.clj
-
-./target
-    /default
-        /classes
-        /repl-port
-        /stale
-    /default+test+test
-        /classes
-        /stale
+test
+├── data_lake
+│   ├── main_test.clj
+│   └── sqlite_test.clj  ........ need to separate!
+├── fixture
+└── util
+    └── db_util_test.clj

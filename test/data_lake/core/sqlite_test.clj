@@ -1,4 +1,4 @@
-(ns data-lake.sqlite-test
+(ns data-lake.core.sqlite-test
   (:require [clojure.test :refer :all]
             [clojure.java.jdbc :as jdbc]
             [clojure.java.io :as io]
@@ -6,7 +6,7 @@
             [clojure.edn :as edn]
             [honeysql.core :as sql]
             [honeysql.helpers :as h]
-            [data-lake.task.sqlite :refer :all]))
+            [data-lake.core.sqlite :refer :all]))
 
 
 (st/instrument)
