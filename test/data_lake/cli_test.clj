@@ -1,4 +1,4 @@
-(ns data-lake.main-test
+(ns data-lake.cli-test
   (:require [clojure.java.io :as io]
             [clojure.test :refer :all]
             [clojure.java.jdbc :as jdbc]
@@ -6,16 +6,15 @@
             [honeysql.helpers :as h]
             [data-lake.consts :as c]
             [data-lake.core.sqlite :as sqlite]
-            [data-lake.main :refer :all]
             [data-lake.cli :as cli]
             [data-lake.task.common :as tc]
             [data-lake.task.init :as init]
-            ))
+            [data-lake.task.help :as help]))
 
 (deftest cli-run-args-test
   (testing "args"
-    (is (= (with-out-str (cli/run)) cli/help-msg))
-    (is (= (with-out-str (cli/run "help")) cli/help-msg)))
+    (is (= (with-out-str (cli/run)) help/help-msg))
+    (is (= (with-out-str (cli/run "help")) help/help-msg)))
   (let [pre-init (tc/initiated?)
         history  (io/as-file c/history-db-path)]
     (when-not (tc/initiated?)

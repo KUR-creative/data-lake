@@ -6,15 +6,8 @@
             [data-lake.core.sqlite :as sqlite]
             [data-lake.task.common :as tc]
             [data-lake.task.init]
-            [data-lake.task.sqlite]))
-
-
-(def help-msg "help-msg\n")
-
-(defmethod tc/run-task "help" [task & args] 
-  (print help-msg))
-(defmethod tc/run-task nil [& args] 
-  (print help-msg))
+            [data-lake.task.sqlite]
+            [data-lake.task.help]))
 
 (defn run
   "Run command according to args"

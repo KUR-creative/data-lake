@@ -5,7 +5,6 @@
             ;[clojure.tools.trace :as dbg]
             ))
 
-
 (defmulti run-cmd (fn [& args] (when args (first args))))
 
 (defmethod run-cmd "new" [& args]
@@ -15,7 +14,6 @@
     (create! db-path schema)))
 
 (defmethod run-cmd :default [& args] false)
-
 
 (defmethod tc/run-task "sqlite" [task & args] 
   (if (tc/initiated?)
