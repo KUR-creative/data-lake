@@ -30,9 +30,11 @@
           (is (.exists history))
           (is (= "init" 
                  (-> (jdbc/query db query) first :cmd))))))
+
     (testing "already initiated"
       (is (= (with-out-str (-main "init"))
              no-need-init-msg)))
+
     (testing "sqlite create!"
       (let [db-path  "./test/fixture/test6.db"
             file     (io/as-file db-path)
@@ -40,17 +42,29 @@
         (-main "sqlite" "new" db-path edn-path :no-log)
         (is (.exists file)) 
         (.delete file)))
-    (testing "no-log"
-      (let [db-path  "./test/fixture/test_no_log.db"
-            db-file  (io/as-file db-path)
-            history  (io/as-file c/history-db-path)
-            edn-path "./DB/sqlite/cmd_history_0.1.0.edn"]
+
+    (let [db-path    "./test/fixture/test_no_log.db"
+          db-file    (io/as-file db-path)
+          history-db (sqlite/db-spec c/history-db-path)
+          edn-path   "./DB/sqlite/cmd_history_0.1.0.edn"
+          query      (-> (h/select :cmd) 
+                         (h/from :history)
+                         sql/format)
+          prev-n-cmd (count (jdbc/query history-db 
+                                        query))]
+      (testing "if :no-log then do not log cmd to history"
         (-main "sqlite" "new" db-path edn-path :no-log)
         (is (.exists db-file))
-            ; TODO: check history isn't logged.
-            ; If there is no history db then skip.
-            ; If there is history then check no logging.
+        (is (= prev-n-cmd 
+               (count (jdbc/query history-db query))))
+        (.delete db-file))
+
+      (testing "if no :no-log then log cmd to history"
+        (-main "sqlite" "new" db-path edn-path)
+        (is (= (+ prev-n-cmd 1)
+               (count (jdbc/query history-db query))))
         (.delete db-file)))
+
     (when-not pre-init 
       (println "Remove created history db for testing") 
       (.delete history))))
