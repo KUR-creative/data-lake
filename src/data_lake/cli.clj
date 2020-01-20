@@ -10,7 +10,6 @@
 
 
 (def help-msg "help-msg\n")
-(def no-need-init-msg "Already initiated")
 
 (defmethod tc/run-task "help" [task & args] 
   (print help-msg))

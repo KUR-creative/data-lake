@@ -9,6 +9,7 @@
             [data-lake.main :refer :all]
             [data-lake.cli :as cli]
             [data-lake.task.common :as tc]
+            [data-lake.task.init :as init]
             ))
 
 (deftest cli-run-args-test
@@ -33,7 +34,7 @@
 
     (testing "already initiated"
       (is (= (with-out-str (cli/run "init"))
-             cli/no-need-init-msg)))
+             init/no-need-init-msg)))
 
     (testing "sqlite create!"
       (let [db-path  "./test/fixture/test6.db"
