@@ -8,4 +8,5 @@
 (defn -main
   "Entry point"
   [& args]
-  (apply cli/run args))
+  (apply cli/run args)
+  (shutdown-agents)) ;; shutdown child processes..

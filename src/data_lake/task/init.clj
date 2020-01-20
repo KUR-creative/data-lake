@@ -16,3 +16,4 @@
         (sqlite/schema-map c/history-schema-path))
       (tc/log args)
       (println "System is initiated. History DB is created."))))
+
