@@ -23,11 +23,12 @@
 
 (defn log [args]
   (if (.exists (io/as-file c/history-db-path))
-      (jdbc/insert! (sqlite/db-spec c/history-db-path)
-                    :history 
-                    {:cmd  (clojure.string/join " " args)
-                     :time (offset-date-time)
-                     :git_hash (git-hash)})))
+      (jdbc/insert! 
+        (sqlite/db-spec c/history-db-path)
+        :history 
+        {:cmd  (clojure.string/join " " args)
+         :time (offset-date-time)
+         :git_hash (git-hash)})))
 
 
 (defmulti run-task (fn [& args] (when args (first args))))
