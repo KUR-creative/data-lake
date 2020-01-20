@@ -1,8 +1,12 @@
+;map <F5> :wa<CR>:%Eval<CR>
+;map <F6> :wa<CR>:!lein test<CR>
+;map lr :wa<CR>:!lein run 
 (ns data-lake.main
-  (:require [util.db-util :as dbu])
+  (:require [data-lake.cli :as cli])
   (:gen-class))
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Entry point"
   [& args]
-  (println "Hello, World!"))
+  (apply cli/run args)
+  (shutdown-agents)) ;; shutdown child processes..

@@ -1,28 +1,23 @@
 (ns data-lake.task.sqlite
-  (:require [clojure.java.jdbc :as jdbc]
-            [honeysql.core :as sql]
-            [honeysql.helpers :as h]
-            [clojure.spec.alpha :as s]
-            [orchestra.spec.test :as st]
+  (:require [clojure.edn :as edn]
+            [data-lake.core.sqlite :refer [create!]]
+            [data-lake.task.common :as tc]
             ;[clojure.tools.trace :as dbg]
-            )
-  (:gen-class))
+            ))
 
-(s/def ::table-name (s/or :kw keyword? :s string?))
-(s/def ::table-spec (s/* vector?))
-(s/def ::table-schema (s/tuple ::table-name 
-                               ::table-spec))
-(s/fdef create!
-  :args (s/cat :path string? 
-               :schema (s/coll-of ::table-schema)))
+(defmulti run-cmd (fn [& args] (when args (first args))))
 
-(defn create!
-  "Create sqlite db in `path` using schema 
-  described in `schema`"
-  [path schema]
-  (let [db {:classname   "org.sqlite.JDBC"
-            :subprotocol "sqlite"
-            :subname     path}]
-    (jdbc/db-do-commands
-      db (mapv #(apply jdbc/create-table-ddl %) schema))
-    db))
+(defmethod run-cmd "new" [& args]
+  (let [[_ db-path edn-path] args
+        schema (-> edn-path slurp edn/read-string :schema)]
+    ;(create! db-path (dbg/trace schema)
+    (create! db-path schema)))
+
+(defmethod run-cmd :default [& args] false)
+
+(defmethod tc/run-task "sqlite" [task & args] 
+  (if (tc/initiated?)
+      (do (when-not (contains? (set args) :no-log) 
+            (tc/log args))
+          (apply run-cmd args))
+      (println "Please run `$lake init` first")))

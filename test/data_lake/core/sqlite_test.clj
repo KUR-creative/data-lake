@@ -1,17 +1,17 @@
-(ns data-lake.sqlite-test
-  (:require [clojure.test :refer :all]
-            [clojure.java.jdbc :as jdbc]
-            [clojure.java.io :as io]
-            [orchestra.spec.test :as st]
+(ns data-lake.core.sqlite-test
+  (:require [clojure.java.io :as io]
             [clojure.edn :as edn]
+            [clojure.test :refer :all]
+            [clojure.java.jdbc :as jdbc]
+            [orchestra.spec.test :as st]
             [honeysql.core :as sql]
             [honeysql.helpers :as h]
-            [data-lake.task.sqlite :refer :all]))
+            [data-lake.core.sqlite :refer :all]))
 
 
 (st/instrument)
 
-(def schema-map
+(def schema
   {:file
    [[:guid      :BLOB    "NOT NULL" "PRIMARY KEY"]
     [:path      :TEXT    "NOT NULL"]
@@ -36,13 +36,13 @@
   (testing "create sqlite db file"
     (let [path "./test/fixture/test2.db" 
           file (io/as-file path)
-          _    (create! path schema-map)]
+          _    (create! path schema)]
       (do (is (.exists file)) 
           (.delete file))))
   (testing "if successful create! db then return db-spec"
     (let [path "./test/fixture/test3.db" 
           file (io/as-file path)
-          db   (create! path schema-map)]
+          db   (create! path schema)]
       (do (is (.exists file)) 
           (is (= {:classname   "org.sqlite.JDBC"
                   :subprotocol "sqlite"
@@ -54,7 +54,7 @@
   (testing "insert and get"
     (let [path "./test/fixture/test4.db" 
           file (io/as-file path)
-          db   (create! path schema-map)
+          db   (create! path schema)
           row  #(identity {:guid (java.util.UUID/randomUUID)
                            :path "test"
                            :extension "png"

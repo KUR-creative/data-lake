@@ -10,9 +10,13 @@ I dunno
 
 ## Usage
 
-FIXME: explanation
+don't use this:
+$ java -jar data-lake-0.1.0-standalone.jar [args]
 
-    $ java -jar data-lake-0.1.0-standalone.jar [args]
+Now, just run:
+$ lein run [args]
+
+This app used as script.
 
 ## Options
 
