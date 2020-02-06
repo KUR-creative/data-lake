@@ -12,6 +12,7 @@
                  [honeysql "0.9.5"]
                  [orchestra "2018.12.06-2"]
                  [clojure.java-time "0.3.2"]
+                 [me.raynes/fs "1.4.6"]
                  ]
   :main ^:skip-aot data-lake.main
   :target-path "target/%s"
