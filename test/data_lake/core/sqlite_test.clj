@@ -70,13 +70,12 @@
                  #_(into #() (map :guid out))))
           (.delete file)))))
 
-(def edn-path "./DB/sqlite/szmc_schema_0.1.0.edn")
 (deftest szmc-sqlite-v0.1.0-schema-test
   (testing "create szmc v0.1.0 sqlite db from edn"
-    (let [path "./test/fixture/test5.db" 
-          file (io/as-file path)
-          m    (edn/read-string (slurp edn-path))
-          _    (create! path (:schema m))]
+    (let [path     "./test/fixture/test5.db" 
+          file     (io/as-file path)
+          edn-path "./DB/sqlite/szmc_schema_0.1.0.edn"
+          _        (create! path (schema-map edn-path))]
       (do (is (.exists file)) (.delete file)))))
 
 ;; TODO: test with running sql command(insert ...)
