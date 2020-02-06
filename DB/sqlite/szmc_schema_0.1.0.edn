@@ -24,8 +24,8 @@
  {:file
   [[:guid      :BLOB    "NOT NULL" "PRIMARY KEY"]
    [:path      :TEXT    "NOT NULL"]
-   [:extension :TEXT    "NOT NULL"]
-   [:size      :INTEGER "NOT NULL"]]
+   [:extension :TEXT    "NOT NULL"]  ; just extension. not include dot(.)
+   [:size      :INTEGER "NOT NULL"]] ; szie in bytes.
 
   :annotation_method
   [[:name :TEXT "NOT NULL" "PRIMARY KEY"]] ;segmentation, classification, ...
