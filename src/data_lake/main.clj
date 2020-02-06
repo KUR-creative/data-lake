@@ -1,6 +1,6 @@
 ;map <F5> :wa<CR>:%Eval<CR>
 ;map <F8> :wa<CR>:!lein test<CR>
-;map lr :wa<CR>:!lein run 
+;map LR :wa<CR>:!lein run 
 (ns data-lake.main
   (:require [data-lake.cli :as cli])
   (:gen-class))
