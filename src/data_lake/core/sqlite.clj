@@ -34,5 +34,5 @@
   :args (s/cat :edn-path string?)
   :ret ::schema-map)
 (defn schema-map [edn-path]
-  "schema edn path -> schema map"
+  "schema edn path -> schema map. Useful for create!"
   (-> edn-path slurp edn/read-string :schema))

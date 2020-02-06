@@ -1,3 +1,5 @@
+;; TODO: init can be separated in task/core.
+;; Currently init task and core are both implementated here.
 (ns data-lake.task.init
   (:require [data-lake.consts :as c]
             [data-lake.core.sqlite :as sqlite]
