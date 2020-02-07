@@ -39,6 +39,7 @@
   :image
   [[:guid     :BLOB    "NOT NULL" "PRIMARY KEY" :REFERENCES "file(guid)"]
    [:hash     :BLOB    "NOT NULL"]
+   [:type     :TEXT    "NOT NULL"]
    [:height   :INTEGER "NOT NULL"]
    [:width    :INTEGER "NOT NULL"]
    [:color    :TEXT    "NOT NULL" :REFERENCES "image_color(name)"]

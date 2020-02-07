@@ -5,9 +5,9 @@ input(guid) | output(guid or text value) | method
 # method는 어떻게 만든 데이터인지 밝힘.
 
 image: 이미지 데이터 모음
-guid | image_hash | height | width | color | category 
+guid | hash | type | height | width | color | category 
 # image_hash는 Perception Hash를 써서 비슷한 이미지 중복을 억제함.
-# category는 이미지마다 존재하는 metadata를 저장하는 테이블을 가리킴.
+# category는 이미지마다 존재하는 메타 데이터(manga109 같은..)를 저장하는 테이블을 가리킴.
 
 dataset: 데이터셋 모음
 name | split | major | minor | description
