@@ -50,6 +50,7 @@
                  db))
           (.delete file)))))
 
+
 (deftest create!-io-test
   (testing "insert and get"
     (let [path "./test/fixture/test4.db" 
