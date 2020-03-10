@@ -8,7 +8,7 @@
 (defn add!
   "Add 1 image into db.
   If image size is too big, It doesn't calc img hash."
-  [db img-path]
+  [db img-path color category]
   (let [id (java.util.UUID/randomUUID)]
     (jdbc/insert! 
       db 
@@ -25,5 +25,5 @@
        :type     (iu/img-type img-path) ;; TODO: img / not img / broken header
        :height   (iu/height img-path) 
        :width    (iu/width img-path)
-       :color    0 ;TODO  change
-       :category 0}))) ;TODO  change
+       :color    color ;TODO  change
+       :category category}))) ;TODO  change

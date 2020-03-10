@@ -31,10 +31,19 @@
   "Image type from metadata."
   (str (private-type path)))
 
-;; TODO: refactoring.. how? 
-;; TODO: Add fixture and test cases.
 ;(def path (io/file "./DATA/very_big.jpg"))
 ;(def path (io/file "./DATA/big.png"))
+;(width path)
+#_(for [dir (-> (io/file path)
+              (PngMetadataReader/readMetadata)
+              (.getDirectories))]
+  ;dir)
+  (for [tag (.getTags dir)]
+    (println tag)))
+    
+;; TODO: refactoring.. how? 
+;; TODO: Add fixture and test cases.
+;(for [dir  com.drew.imaging.
 (defmulti width (fn [path] (private-type path)))
 (defmethod width FileType/Jpeg [path]
   (-> (io/file path)

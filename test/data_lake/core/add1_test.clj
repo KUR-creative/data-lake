@@ -17,7 +17,7 @@
                             (s/schema-map edn-path))
         jpg-path "./DATA/manga109/images/AisazuNihaIrarenai/AisazuNihaIrarenai_000.jpg"]
     (testing "Add just 1 image"
-      (a1/add! db jpg-path)
+      (a1/add! db jpg-path :rgb :manga109)
       (let [query (-> (h/select :*) (h/from :file) sql/format)
             row   (first (jdbc/query db query))]
         (is (= jpg-path (row :path)))
