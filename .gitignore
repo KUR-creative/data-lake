@@ -15,3 +15,7 @@ DATA
 *.db
 .fuse*
 *.vim
+
+# emacs
+\#*
+*~
