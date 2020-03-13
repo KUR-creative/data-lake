@@ -16,6 +16,7 @@
                  [me.raynes/fs "1.4.6"]
                  [com.github.kilianB/JImageHash "1.0.2"]
                  [com.drewnoakes/metadata-extractor "2.13.0"]
+                 [org.clojure/data.xml "0.0.8"]
                  ]
   :main ^:skip-aot data-lake.main
   :target-path "target/%s"
