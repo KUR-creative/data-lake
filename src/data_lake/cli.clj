@@ -3,6 +3,7 @@
             [data-lake.task.init]
             [data-lake.task.sqlite]
             [data-lake.task.help]
+            [data-lake.task.add]
             ))
 
 (defn run

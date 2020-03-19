@@ -8,6 +8,14 @@
  
  lein run sqlite new <name.db-path> <schema.edn-path>
    Create new empty sqlite db in <name.db-path> with schema from <schema.edn-path>
+
+ lein run add image <target> [<source>]+
+   Add <source> to <target>
+   <source> can be: 
+     image(jpg, png) file
+     directory containing image(jpg, png) files
+   <target> can be: 
+     path of database
  ")
 ;; TODO: autogenerate above...
 
